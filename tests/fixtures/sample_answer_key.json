@@ -1,0 +1,302 @@
+{
+  "_file_summary": {
+    "record_count": 12,
+    "total_length": 1851,
+    "total_gc": 843,
+    "total_at": 825,
+    "total_n": 183,
+    "total_masked": 296
+  },
+  "rec01_mixed_wrap60": {
+    "length": 250,
+    "gc_count": 123,
+    "at_count": 124,
+    "n_count": 3,
+    "masked_count": 10,
+    "wrap_width": 60,
+    "blocks": [
+      {
+        "type": "reg",
+        "length": 120
+      },
+      {
+        "type": "mask",
+        "length": 10
+      },
+      {
+        "type": "gap",
+        "length": 3
+      },
+      {
+        "type": "reg",
+        "length": 117
+      }
+    ]
+  },
+  "rec02_longgap_unwrapped": {
+    "length": 400,
+    "gc_count": 175,
+    "at_count": 175,
+    "n_count": 50,
+    "masked_count": 0,
+    "wrap_width": "unwrapped",
+    "blocks": [
+      {
+        "type": "reg",
+        "length": 150
+      },
+      {
+        "type": "gap",
+        "length": 50
+      },
+      {
+        "type": "reg",
+        "length": 200
+      }
+    ]
+  },
+  "rec03_heavymask_wrap70": {
+    "length": 180,
+    "gc_count": 80,
+    "at_count": 80,
+    "n_count": 20,
+    "masked_count": 160,
+    "wrap_width": 70,
+    "blocks": [
+      {
+        "type": "mask",
+        "length": 80
+      },
+      {
+        "type": "gap",
+        "length": 20
+      },
+      {
+        "type": "mask",
+        "length": 80
+      }
+    ]
+  },
+  "rec04_clean_unwrapped": {
+    "length": 90,
+    "gc_count": 45,
+    "at_count": 45,
+    "n_count": 0,
+    "masked_count": 0,
+    "wrap_width": "unwrapped",
+    "blocks": [
+      {
+        "type": "reg",
+        "length": 90
+      }
+    ]
+  },
+  "rec05_boundary_straddle_wrap60": {
+    "length": 173,
+    "gc_count": 83,
+    "at_count": 82,
+    "n_count": 8,
+    "masked_count": 10,
+    "wrap_width": 60,
+    "blocks": [
+      {
+        "type": "reg",
+        "length": 55
+      },
+      {
+        "type": "mask",
+        "length": 10
+      },
+      {
+        "type": "gap",
+        "length": 8
+      },
+      {
+        "type": "reg",
+        "length": 100
+      }
+    ]
+  },
+  "rec06_leadingN_trailingmask_wrap60": {
+    "length": 160,
+    "gc_count": 72,
+    "at_count": 73,
+    "n_count": 15,
+    "masked_count": 25,
+    "wrap_width": 60,
+    "blocks": [
+      {
+        "type": "gap",
+        "length": 15
+      },
+      {
+        "type": "reg",
+        "length": 120
+      },
+      {
+        "type": "mask",
+        "length": 25
+      }
+    ]
+  },
+  "rec07_all_gap_unwrapped": {
+    "length": 30,
+    "gc_count": 0,
+    "at_count": 0,
+    "n_count": 30,
+    "masked_count": 0,
+    "wrap_width": "unwrapped",
+    "blocks": [
+      {
+        "type": "gap",
+        "length": 30
+      }
+    ]
+  },
+  "rec08_multi_gap_wrap60": {
+    "length": 210,
+    "gc_count": 80,
+    "at_count": 79,
+    "n_count": 51,
+    "masked_count": 0,
+    "wrap_width": 60,
+    "blocks": [
+      {
+        "type": "reg",
+        "length": 40
+      },
+      {
+        "type": "gap",
+        "length": 1
+      },
+      {
+        "type": "reg",
+        "length": 40
+      },
+      {
+        "type": "gap",
+        "length": 10
+      },
+      {
+        "type": "reg",
+        "length": 40
+      },
+      {
+        "type": "gap",
+        "length": 40
+      },
+      {
+        "type": "reg",
+        "length": 39
+      }
+    ]
+  },
+  "rec09_multi_mask_wrap80": {
+    "length": 190,
+    "gc_count": 94,
+    "at_count": 96,
+    "n_count": 0,
+    "masked_count": 70,
+    "wrap_width": 80,
+    "blocks": [
+      {
+        "type": "reg",
+        "length": 30
+      },
+      {
+        "type": "mask",
+        "length": 5
+      },
+      {
+        "type": "reg",
+        "length": 30
+      },
+      {
+        "type": "mask",
+        "length": 20
+      },
+      {
+        "type": "reg",
+        "length": 30
+      },
+      {
+        "type": "mask",
+        "length": 45
+      },
+      {
+        "type": "reg",
+        "length": 30
+      }
+    ]
+  },
+  "rec10_single_base": {
+    "length": 1,
+    "gc_count": 1,
+    "at_count": 0,
+    "n_count": 0,
+    "masked_count": 0,
+    "wrap_width": 60,
+    "blocks": [
+      {
+        "type": "regGC",
+        "length": 1
+      }
+    ]
+  },
+  "rec11_minimal_gap_and_mask_wrap50": {
+    "length": 62,
+    "gc_count": 30,
+    "at_count": 31,
+    "n_count": 1,
+    "masked_count": 1,
+    "wrap_width": 50,
+    "blocks": [
+      {
+        "type": "reg",
+        "length": 20
+      },
+      {
+        "type": "gap",
+        "length": 1
+      },
+      {
+        "type": "reg",
+        "length": 20
+      },
+      {
+        "type": "mask",
+        "length": 1
+      },
+      {
+        "type": "reg",
+        "length": 20
+      }
+    ]
+  },
+  "rec12_extreme_composition_wrap60": {
+    "length": 105,
+    "gc_count": 60,
+    "at_count": 40,
+    "n_count": 5,
+    "masked_count": 20,
+    "wrap_width": 60,
+    "blocks": [
+      {
+        "type": "regGC",
+        "length": 40
+      },
+      {
+        "type": "regAT",
+        "length": 40
+      },
+      {
+        "type": "gap",
+        "length": 5
+      },
+      {
+        "type": "maskGC",
+        "length": 20
+      }
+    ]
+  }
+}
