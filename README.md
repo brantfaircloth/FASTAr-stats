@@ -89,12 +89,19 @@ same time, since they're printing different columns from the same computed
 totals. Output was spot-checked to agree between the two tools on length and
 N-count for the same input.
 
-This isn't a knock on `faSize` — its per-record loop does more (case-folding
-into a canonical form via `faToDnaPC`, building a linked list of results for
-the summary stats at the end) and it supports far more input formats and
-flags than `fastar-stats` does. `fastar-stats` is deliberately narrow: one
-format in, one streaming pass, one output shape — that's most of where the
-gap comes from.
+A second test on a real-world genome assembly returned the following results 
+using `hyperfine`:
+```bash
+○ → hyperfine --warmup 3 'fastar-stats bSiaSia1.2.hap1.RENAME.fasta'
+Benchmark 1: fastar-stats <file>.fasta
+  Time (mean ± σ):      2.046 s ±  0.004 s    [User: 1.871 s, System: 0.170 s]
+  Range (min … max):    2.037 s …  2.051 s    10 runs
+
+○ → hyperfine --warmup 3 'faSize -detailed <file>.fasta'
+Benchmark 1: faSize -detailed bSiaSia1.2.hap1.RENAME.fasta
+  Time (mean ± σ):      5.559 s ±  0.048 s    [User: 5.349 s, System: 0.200 s]
+  Range (min … max):    5.526 s …  5.668 s    10 runs
+```
 
 ## Install
 
