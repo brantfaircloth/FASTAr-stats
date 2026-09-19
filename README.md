@@ -30,6 +30,15 @@ rec03_heavymask_wrap70  180    20      160     11.11   88.89
 
 ## Install
 
+### Prebuilt binary
+
+Every tagged release publishes prebuilt binaries for Linux (x86_64, aarch64),
+macOS (x86_64, aarch64), and Windows (x86_64) — grab the archive for your
+platform from the [Releases page](../../releases), extract it, and put the
+`fastar-stats` binary somewhere on your `PATH`.
+
+### From source
+
 Requires a Rust toolchain (stable, 2024 edition support — install via
 [rustup](https://rustup.rs) if you don't have one).
 
@@ -111,6 +120,18 @@ fixture and asserts every output column against the truth set.
 
 ```
 cargo test --release
+```
+
+## Releasing
+
+Pushing a tag matching `v*.*.*` (e.g. `v0.1.0`) triggers
+[`.github/workflows/release.yml`](.github/workflows/release.yml), which
+builds binaries for every supported platform and attaches them to a new
+GitHub Release for that tag:
+
+```
+git tag v0.1.0
+git push origin v0.1.0
 ```
 
 ## License
