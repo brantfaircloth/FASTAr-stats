@@ -127,14 +127,17 @@ The binary is at `target/release/fastar-stats`. Copy it somewhere on your
 
 ```
 fastar-stats <fasta-file>
+fastar-stats -h | --help
+fastar-stats -v | --version
 ```
 
 Takes exactly one argument: the path to a FASTA file. There is no support for
 reading from stdin, multiple files, or gzip-compressed input — this tool does
 one thing.
 
-Exit codes: `0` on success, `2` on a usage error (wrong number of arguments),
-`1` on an I/O error (e.g. file not found), with the error printed to stderr.
+Exit codes: `0` on success (including `-h`/`--help` and `-v`/`--version`), `2`
+on a usage error (wrong number of arguments), `1` on an I/O error (e.g. file
+not found), with the error printed to stderr.
 
 ## How it works
 

@@ -1,7 +1,28 @@
 use std::env;
+use std::ffi::OsStr;
 use std::fs::File;
 use std::io::{self, BufRead, BufReader, BufWriter, Write};
 use std::process::ExitCode;
+
+const HELP_TEXT: &str = "\
+fastar-stats - fast per-sequence composition stats for FASTA files
+
+For each record in a FASTA file, prints length, N-count, and soft-masked
+(lowercase) count, plus each as a percentage, as a tab-separated row.
+
+USAGE:
+    fastar-stats <fasta-file>
+    fastar-stats -h | --help
+    fastar-stats -v | --version
+
+OUTPUT COLUMNS:
+    name          sequence ID (first whitespace-delimited token after '>')
+    num_bases     total sequence length, including N
+    num_n         count of N/n bases (assembly gaps)
+    num_masked    count of lowercase bases (soft-masked repeats)
+    pct_n         num_n / num_bases * 100
+    pct_masked    num_masked / num_bases * 100
+";
 
 struct RecordStats {
     name: String,
@@ -40,18 +61,8 @@ fn header_name(line: &[u8]) -> String {
     String::from_utf8_lossy(&rest[..end]).into_owned()
 }
 
-fn run() -> io::Result<()> {
-    let mut args = env::args_os();
-    let _prog = args.next();
-    let path = match args.next() {
-        Some(p) if args.next().is_none() => p,
-        _ => {
-            eprintln!("usage: fastar-stats <fasta-file>");
-            std::process::exit(2);
-        }
-    };
-
-    let file = File::open(&path)?;
+fn run(path: &OsStr) -> io::Result<()> {
+    let file = File::open(path)?;
     let mut reader = BufReader::with_capacity(1 << 20, file);
     let stdout = io::stdout();
     let mut out = BufWriter::with_capacity(1 << 16, stdout.lock());
@@ -107,8 +118,37 @@ fn run() -> io::Result<()> {
     out.flush()
 }
 
+fn usage_error() -> ExitCode {
+    eprintln!("usage: fastar-stats <fasta-file>");
+    eprintln!("       fastar-stats -h | --help");
+    eprintln!("       fastar-stats -v | --version");
+    ExitCode::from(2)
+}
+
 fn main() -> ExitCode {
-    if let Err(e) = run() {
+    let mut args = env::args_os();
+    let _prog = args.next();
+    let arg1 = args.next();
+    if args.next().is_some() {
+        return usage_error();
+    }
+
+    let path = match arg1 {
+        Some(a) => match a.to_str() {
+            Some("-h") | Some("--help") => {
+                print!("{HELP_TEXT}");
+                return ExitCode::SUCCESS;
+            }
+            Some("-v") | Some("--version") => {
+                println!("fastar-stats {}", env!("CARGO_PKG_VERSION"));
+                return ExitCode::SUCCESS;
+            }
+            _ => a,
+        },
+        None => return usage_error(),
+    };
+
+    if let Err(e) = run(&path) {
         eprintln!("fastar-stats: {e}");
         return ExitCode::FAILURE;
     }
