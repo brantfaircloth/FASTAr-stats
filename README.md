@@ -89,18 +89,21 @@ same time, since they're printing different columns from the same computed
 totals. Output was spot-checked to agree between the two tools on length and
 N-count for the same input.
 
-A second test on a real-world genome assembly returned the following results 
-using `hyperfine`:
+A second test on a real-world genome assembly on the same 10-core Apple Silicon 
+host returned the following results using `hyperfine`:
 ```bash
-○ → hyperfine --warmup 3 'fastar-stats bSiaSia1.2.hap1.RENAME.fasta'
-Benchmark 1: fastar-stats <file>.fasta
-  Time (mean ± σ):      2.046 s ±  0.004 s    [User: 1.871 s, System: 0.170 s]
-  Range (min … max):    2.037 s …  2.051 s    10 runs
+➜ hyperfine --warmup 3 './fastar-stats bSiaSia1.2.hap1.RENAME.fasta' './faSize bSiaSia1.2.hap1.RENAME.fasta'
+Benchmark 1: ./fastar-stats bSiaSia1.2.hap1.RENAME.fasta
+  Time (mean ± σ):     424.4 ms ±   4.0 ms    [User: 368.2 ms, System: 55.7 ms]
+  Range (min … max):   417.6 ms … 430.5 ms    10 runs
 
-○ → hyperfine --warmup 3 'faSize -detailed <file>.fasta'
-Benchmark 1: faSize -detailed bSiaSia1.2.hap1.RENAME.fasta
-  Time (mean ± σ):      5.559 s ±  0.048 s    [User: 5.349 s, System: 0.200 s]
-  Range (min … max):    5.526 s …  5.668 s    10 runs
+Benchmark 2: ./faSize bSiaSia1.2.hap1.RENAME.fasta
+  Time (mean ± σ):      1.908 s ±  0.002 s    [User: 1.813 s, System: 0.091 s]
+  Range (min … max):    1.906 s …  1.913 s    10 runs
+
+Summary
+  ./fastar-stats bSiaSia1.2.hap1.RENAME.fasta ran
+    4.50 ± 0.04 times faster than ./faSize bSiaSia1.2.hap1.RENAME.fasta
 ```
 
 ## Install
