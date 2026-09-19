@@ -69,6 +69,30 @@ aggregate `%masked` across the whole input, not per record). `faSize` also
 accepts multiple files and `.2bit` input in one invocation, which
 `fastar-stats` does not.
 
+### Speed
+
+On a synthetic 196MB, 200-record FASTA (mixed N-gaps, soft-masked runs, and
+varying line-wrap widths — same style as `tests/fixtures/sample.fasta`, just
+bigger), mean of 4 runs after a warm-up run, on a 10-core Apple Silicon host:
+
+| tool | time | throughput |
+|---|---|---|
+| `fastar-stats` | 65ms | ~3.0 GB/s |
+| `faSize -detailed` | 432ms | ~0.46 GB/s |
+| `faSize -veryDetailed` | 432ms | ~0.46 GB/s |
+
+`fastar-stats` is about **6.6x faster** here. Both flags of `faSize` take the
+same time, since they're printing different columns from the same computed
+totals. Output was spot-checked to agree between the two tools on length and
+N-count for the same input.
+
+This isn't a knock on `faSize` — its per-record loop does more (case-folding
+into a canonical form via `faToDnaPC`, building a linked list of results for
+the summary stats at the end) and it supports far more input formats and
+flags than `fastar-stats` does. `fastar-stats` is deliberately narrow: one
+format in, one streaming pass, one output shape — that's most of where the
+gap comes from.
+
 ## Install
 
 ### Prebuilt binary
@@ -139,8 +163,8 @@ tuning, and the risk of a `SIGBUS` crash instead of a clean error if the file
 changes underneath it. Plain buffered reads are just as fast here and much
 simpler.
 
-On a synthetic 196MB, 200-record FASTA, `fastar-stats` runs in ~75ms
-(~2.6 GB/s).
+On a synthetic 196MB, 200-record FASTA, `fastar-stats` runs in well under
+100ms — see [Speed](#speed) for numbers and a comparison against `faSize`.
 
 ## Testing
 
