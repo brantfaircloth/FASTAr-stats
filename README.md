@@ -28,6 +28,47 @@ rec03_heavymask_wrap70  180    20      160     11.11   88.89
 ...
 ```
 
+## Comparison to `faSize -detailed`/`-veryDetailed`
+
+The closest widely-used equivalent is [UCSC kent's `faSize`](https://github.com/ucscGenomeBrowser/kent/blob/master/src/utils/faSize/faSize.c)
+(there is no tool actually named `faStats` in kent — `faSize` is almost
+certainly what's meant). It has two relevant flags, and neither produces the
+same columns as `fastar-stats`:
+
+| tool / flag | columns per record |
+|---|---|
+| `fastar-stats` | `name  num_bases  num_n  num_masked  pct_n  pct_masked` |
+| `faSize -detailed` | `name  size` — no composition breakdown at all |
+| `faSize -veryDetailed` | `name  size  nCount  realCount  upperCount  lowerCount` |
+
+`-veryDetailed` is the one with comparable counts, but there's a real
+semantic difference, not just a naming one: **`faSize` treats "is N" and "is
+masked" as mutually exclusive, `fastar-stats` treats them as independent
+axes.** In `faSize`'s loop, a base is classified as N first; only bases that
+aren't N are then checked for upper/lower case, so a lowercase `n` (a
+soft-masked assembly gap) is counted only in `nCount` — never in
+`lowerCount`. `fastar-stats` counts case and N-ness separately, so a
+lowercase `n` is counted in *both* `num_n` and `num_masked`.
+
+Concretely, for the 16-base record `acgtNNNNnnnnACGT`:
+
+| tool | N | masked/lower |
+|---|---|---|
+| `fastar-stats` | `num_n=8` | `num_masked=8` |
+| `faSize -veryDetailed` | `nCount=8` | `lowerCount=4` |
+
+Both agree on the N count; `faSize`'s lower-case count excludes the 4
+lowercase `n`s that `fastar-stats` counts as masked, since it never gets a
+chance to classify their case. Which convention is "right" depends on what
+you're using the mask count for — whether a soft-masked gap should count as
+masked sequence or not.
+
+Other differences: `fastar-stats` reports percentages per record;
+neither `faSize` flag does (only its plain, non-detailed mode prints an
+aggregate `%masked` across the whole input, not per record). `faSize` also
+accepts multiple files and `.2bit` input in one invocation, which
+`fastar-stats` does not.
+
 ## Install
 
 ### Prebuilt binary
