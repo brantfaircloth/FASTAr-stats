@@ -3,6 +3,11 @@
 A small, fast command-line tool that reports per-sequence composition stats for
 a FASTA file: length, N-content, and soft-masked content.
 
+## Coding
+
+I won't mince words - I vibe coded this because it's a tool I needed, and I wanted
+it to be **fast**.
+
 ## What it does
 
 Given a FASTA file, `fastar-stats` prints one row per record (contig/scaffold)
@@ -30,9 +35,7 @@ rec03_heavymask_wrap70  180    20      160     11.11   88.89
 
 ## Comparison to `faSize -detailed`/`-veryDetailed`
 
-The closest widely-used equivalent is [UCSC kent's `faSize`](https://github.com/ucscGenomeBrowser/kent/blob/master/src/utils/faSize/faSize.c)
-(there is no tool actually named `faStats` in kent — `faSize` is almost
-certainly what's meant). It has two relevant flags, and neither produces the
+The closest widely-used equivalent is [UCSC kent's `faSize`](https://github.com/ucscGenomeBrowser/kent/blob/master/src/utils/faSize/faSize.c). It has two relevant flags, and neither produces the
 same columns as `fastar-stats`:
 
 | tool / flag | columns per record |
